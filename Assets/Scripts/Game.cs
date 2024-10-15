@@ -1,7 +1,13 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Game
+public class Game : MonoBehaviour
 {
+    [SerializeField] GameObject GrassTile;
+    [SerializeField] GameObject PathTile;
+    [SerializeField] GameObject Tile;
+
+    
     void Start()
     {
         Map map = new Map(10, 10);
@@ -27,6 +33,10 @@ public class Game
         {
             CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Road);
         }
+
+        //renders the tiles
+        DisplayTiles displayTiles = new DisplayTiles(Tile, GrassTile, PathTile);
+        displayTiles.InstantiateTiles(map.GetAllCells());
     }
 
     void Update()
