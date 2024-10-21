@@ -434,29 +434,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2135647297}
-  - component: {fileID: 2135647296}
+  - component: {fileID: 2135647298}
+  - component: {fileID: 2135647299}
   m_Layer: 0
-  m_Name: Game
+  m_Name: MapDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2135647296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135647295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 102e06c547affa8449c9e6d97d3112d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrassTile: {fileID: 8421429174745104229, guid: 1831da29ab8eacb4f8f7fc019832764c, type: 3}
-  PathTile: {fileID: 8421429174745104229, guid: 0a507c3e3cf78db4d85455c65b40cc00, type: 3}
-  Tile: {fileID: 1870935694225226343, guid: 03b4c25bb80551246a43474ff3abbab2, type: 3}
 --- !u!4 &2135647297
 Transform:
   m_ObjectHideFlags: 0
@@ -472,6 +458,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135647298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135647295}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2bf3e559a7d1a24abe903423117d742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrassTile: {fileID: 8421429174745104229, guid: 1831da29ab8eacb4f8f7fc019832764c, type: 3}
+  PathTile: {fileID: 8421429174745104229, guid: 0a507c3e3cf78db4d85455c65b40cc00, type: 3}
+  Tile: {fileID: 1870935694225226343, guid: 03b4c25bb80551246a43474ff3abbab2, type: 3}
+  MapSize: 0a0000000a000000
+--- !u!114 &2135647299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135647295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca39945331dffe47ae75eddced4bbd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrassTile: {fileID: 2363575345980441741, guid: b346006c04d05aa4e8eacd63d185a575, type: 3}
+  PathTile: {fileID: 6271182139133258258, guid: 35daebeeb7df1dc47942fad664691318, type: 3}
+  Tile: {fileID: 3223859646175902144, guid: daf8b4dd611785e4d88b2a633cafb04d, type: 3}
+  MapSize: 0a0000000a000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
