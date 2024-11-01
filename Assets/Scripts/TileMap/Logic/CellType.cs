@@ -1,5 +1,5 @@
 public enum CellType
 {
     Grass,
-    Road
+    Road,
 }

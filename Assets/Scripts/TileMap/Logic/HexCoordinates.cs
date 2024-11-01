@@ -7,6 +7,13 @@ public struct HexCoordinates : ICoordinate
         S = s;
     }
 
+    public HexCoordinates(int q, int r)
+    {
+        Q = q;
+        R = r;
+        S = -q - r;
+    }
+
     public int Q { get; }
     public int R { get; }
     public int S { get; }

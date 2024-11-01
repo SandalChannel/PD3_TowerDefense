@@ -11,18 +11,18 @@ public abstract class DisplayMap : MonoBehaviour
 
     [SerializeField] List<ICoordinate> PathCoords = new List<ICoordinate>()
         {
-            //new GridCoordinates(0, 2),
-            //new GridCoordinates(1, 2),
-            //new GridCoordinates(2, 2),
-            //new GridCoordinates(2, 3),
-            //new GridCoordinates(3, 3),
-            //new GridCoordinates(3, 4),
-            //new GridCoordinates(4, 4),
-            //new GridCoordinates(5, 4),
-            //new GridCoordinates(6, 4),
-            //new GridCoordinates(7, 4),
-            //new GridCoordinates(8, 4),
-            //new GridCoordinates(9, 4)
+            new HexCoordinates(0, 2),
+            new HexCoordinates(1, 2),
+            new HexCoordinates(2, 2),
+            new HexCoordinates(2, 3),
+            new HexCoordinates(3, 3),
+            new HexCoordinates(3, 4),
+            new HexCoordinates(4, 4),
+            new HexCoordinates(5, 4),
+            new HexCoordinates(6, 4),
+            new HexCoordinates(7, 4),
+            new HexCoordinates(8, 4),
+            new HexCoordinates(9, 4)
         };
 
 
