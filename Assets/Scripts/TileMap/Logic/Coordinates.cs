@@ -1,8 +1,8 @@
 using System.Runtime.Serialization;
 
-public struct GridCoordinates : ICoordinate
+public struct Coordinates
 {
-    public GridCoordinates(int x, int y)
+    public Coordinates(int x, int y)
     {
         X = x;
         Y = y;

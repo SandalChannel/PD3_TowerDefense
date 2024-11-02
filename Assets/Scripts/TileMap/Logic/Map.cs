@@ -45,7 +45,7 @@ public static class CellHexGenerator
         {
             for (int j = 0; j < width; j++)
             {
-                cells.Add(new Cell(i, j, -i-j));
+                cells.Add(new Cell(i, j));
             }
         }
 
@@ -75,7 +75,7 @@ public static class CellGridGenerator
 
 public static class CellTypeSetter
 {
-    public static void SetCellType(List<Cell> cells, ICoordinate coordinates, CellType type)
+    public static void SetCellType(List<Cell> cells, Coordinates coordinates, CellType type)
     {
         Cell cell = CellGetter.GetCell(cells ,coordinates);
         cell.CellType = type;
@@ -84,7 +84,7 @@ public static class CellTypeSetter
 
 public static class CellGetter
 {
-    public static Cell GetCell(List<Cell> cells, ICoordinate coordinates)
+    public static Cell GetCell(List<Cell> cells, Coordinates coordinates)
     {
         foreach (Cell cell in cells)
         {

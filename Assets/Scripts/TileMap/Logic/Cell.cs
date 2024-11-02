@@ -1,15 +1,18 @@
+using Unity.VisualScripting;
+
 public class Cell
 {
     public CellType CellType { get; set; }
-    public ICoordinate Coordinates { get; set; }
+    public Coordinates Coordinates { get; set; }
 
     public Cell(int xPos, int yPos)
     {
-        Coordinates = new GridCoordinates(xPos, yPos);
+        Coordinates = new Coordinates(xPos, yPos);
     }
 
-    public Cell(int qPos, int rPos, int sPos)
+    public override string ToString()
     {
-        Coordinates = new HexCoordinates(qPos, rPos, sPos);
+        return $"Type: {CellType}, at: {Coordinates}";
     }
+
 }

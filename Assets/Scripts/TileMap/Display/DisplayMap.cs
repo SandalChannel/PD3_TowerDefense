@@ -9,20 +9,20 @@ public abstract class DisplayMap : MonoBehaviour
 
     [SerializeField] int[] MapSize = {10, 10};
 
-    [SerializeField] List<ICoordinate> PathCoords = new List<ICoordinate>()
+    [SerializeField] List<Coordinates> PathCoords = new List<Coordinates>()
         {
-            new HexCoordinates(0, 2),
-            new HexCoordinates(1, 2),
-            new HexCoordinates(2, 2),
-            new HexCoordinates(2, 3),
-            new HexCoordinates(3, 3),
-            new HexCoordinates(3, 4),
-            new HexCoordinates(4, 4),
-            new HexCoordinates(5, 4),
-            new HexCoordinates(6, 4),
-            new HexCoordinates(7, 4),
-            new HexCoordinates(8, 4),
-            new HexCoordinates(9, 4)
+            new Coordinates(0, 2),
+            new Coordinates(1, 2),
+            new Coordinates(2, 2),
+            new Coordinates(2, 3),
+            new Coordinates(3, 3),
+            new Coordinates(3, 4),
+            new Coordinates(4, 4),
+            new Coordinates(5, 4),
+            new Coordinates(6, 4),
+            new Coordinates(7, 4),
+            new Coordinates(8, 4),
+            new Coordinates(9, 4)
         };
 
 
