@@ -1,0 +1,6 @@
+HOWEST LICENCE AGREEMENT
+
+All Code in this repository is owned by Howest (Hoeschool West-Vlaanderen), and is licenced under their terms.
+
+Please refer to this url for the Howest Privacy & Copyright Policies:
+https://www.howest.be/en/privacy-and-copyrights
