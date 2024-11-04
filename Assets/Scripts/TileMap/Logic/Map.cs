@@ -95,4 +95,17 @@ public static class CellGetter
         }
         return null;
     }
+
+    public static List<Cell> GetCellsByType(List<Cell> cells, CellType type)
+    {
+        List<Cell> result = new List< Cell>();
+        foreach (Cell cell in cells)
+        {
+            if (cell.CellType == type)
+            {
+                result.Add(cell);
+            }
+        }
+        return result;
+    }
 }

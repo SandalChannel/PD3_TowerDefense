@@ -15,7 +15,8 @@ public class DisplayMapGrid : DisplayMap
     }
     public override void InstantiateTile(GameObject tile, Cell cell)
     {
-        Instantiate(tile, GridToVector(tile.transform.lossyScale, (Coordinates)cell.Coordinates), Quaternion.identity);
+        GameObject tileInstance = Instantiate(tile, GridToVector(tile.transform.lossyScale, (Coordinates)cell.Coordinates), Quaternion.identity);
+        tileInstance.tag = cell.CellType.ToString();
     }
 
     public override Map CreateMap(int[] mapSize)

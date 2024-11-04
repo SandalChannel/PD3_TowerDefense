@@ -15,7 +15,8 @@ public class DisplayMapHex : DisplayMap
     }
     public override void InstantiateTile(GameObject tile, Cell cell)
     {
-        Instantiate(tile, HexToVector(tile.transform.lossyScale, cell.Coordinates), Quaternion.identity);
+        GameObject tileInstance = Instantiate(tile, HexToVector(tile.transform.lossyScale, cell.Coordinates), Quaternion.identity);
+        tileInstance.tag = cell.CellType.ToString();
     }
 
     public override Map CreateMap(int[] mapSize)

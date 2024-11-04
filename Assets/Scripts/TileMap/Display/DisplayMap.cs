@@ -5,7 +5,11 @@ public abstract class DisplayMap : MonoBehaviour
 {
     [SerializeField] GameObject GrassTile;
     [SerializeField] GameObject PathTile;
+    [SerializeField] GameObject BuildableTile;
+    [SerializeField] GameObject SpawnerTile;
+    [SerializeField] GameObject GoalTile;
     [SerializeField] GameObject Tile;
+    
 
     [SerializeField] int[] MapSize = {10, 10};
 
@@ -25,21 +29,37 @@ public abstract class DisplayMap : MonoBehaviour
             new Coordinates(9, 4)
         };
 
-
-    void Start()
-    {
-        Map map = CreateMap(MapSize);
-
-        
-
-        //sets the celltype for the path
-        foreach (var coords in PathCoords)
+    [SerializeField]
+    List<Coordinates> SpawnerCoords = new List<Coordinates>()
         {
-            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Road);
-        }
+            new Coordinates(0, 2)
+        };
+
+    [SerializeField]
+    List<Coordinates> GoalCoords = new List<Coordinates>()
+        {
+            new Coordinates(9, 4)
+        };
+
+    [SerializeField]
+    List<Coordinates> BuildableCoords = new List<Coordinates>()
+        {
+            new Coordinates(3, 2),
+            new Coordinates(5, 5)
+        };
+
+    public Map Map { get; set; }
+
+
+    void Awake()
+    {
+        Map = CreateMap(MapSize);
+
+        //actually sets the tile type
+        SetMapCellTypes(Map);
 
         //renders the tiles
-        InstantiateTiles(map.GetAllCells());
+        InstantiateTiles(Map.GetAllCells());
     }
 
     //vestigial constructor, managed by Unity now
@@ -49,6 +69,28 @@ public abstract class DisplayMap : MonoBehaviour
     //    PathTile = pathTile;
     //    GrassTile = grassTile;
     //}
+
+    public void SetMapCellTypes(Map map)
+    {
+        //sets the celltype for the path
+        foreach (var coords in PathCoords)
+        {
+            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Road);
+        }
+        foreach (var coords in SpawnerCoords)
+        {
+            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Spawner);
+        }
+        foreach (var coords in GoalCoords)
+        {
+            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Goal);
+        }
+        foreach (var coords in BuildableCoords)
+        {
+            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Buildable);
+        }
+
+    }
 
     public void InstantiateTiles(List<Cell> map)
     {
@@ -61,6 +103,18 @@ public abstract class DisplayMap : MonoBehaviour
             else if (cell.CellType == CellType.Grass)
             {
                 InstantiateTile(GrassTile, cell);
+            }
+            else if (cell.CellType == CellType.Spawner)
+            {
+                InstantiateTile(SpawnerTile, cell);
+            }
+            else if (cell.CellType == CellType.Goal)
+            {
+                InstantiateTile(GoalTile, cell);
+            }
+            else if (cell.CellType == CellType.Buildable)
+            {
+                InstantiateTile(BuildableTile, cell);
             }
             else
             {
