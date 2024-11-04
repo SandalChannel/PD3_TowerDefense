@@ -178,7 +178,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -204,13 +204,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 15, y: 10, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +425,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1131914680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1131914682}
+  - component: {fileID: 1131914681}
+  m_Layer: 0
+  m_Name: EnemyDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1131914681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131914680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588ebaaff851b4e4caba7d90dc9f4e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 2590844116029532316, guid: a8c60c73f0ba6414288f28b242a7615b, type: 3}
+--- !u!4 &1131914682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131914680}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.088109, y: -0.6714843, z: 6.4266224}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2135647295
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +479,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2135647297}
-  - component: {fileID: 2135647298}
   - component: {fileID: 2135647299}
   m_Layer: 0
   m_Name: MapDisplay
@@ -458,22 +502,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2135647298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135647295}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2bf3e559a7d1a24abe903423117d742, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrassTile: {fileID: 8421429174745104229, guid: 1831da29ab8eacb4f8f7fc019832764c, type: 3}
-  PathTile: {fileID: 8421429174745104229, guid: 0a507c3e3cf78db4d85455c65b40cc00, type: 3}
-  Tile: {fileID: 1870935694225226343, guid: 03b4c25bb80551246a43474ff3abbab2, type: 3}
-  MapSize: 0a0000000a000000
 --- !u!114 &2135647299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,6 +516,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GrassTile: {fileID: 2363575345980441741, guid: b346006c04d05aa4e8eacd63d185a575, type: 3}
   PathTile: {fileID: 6271182139133258258, guid: 35daebeeb7df1dc47942fad664691318, type: 3}
+  BuildableTile: {fileID: 2363575345980441741, guid: f46bdeec1e3bff44da2faec3b45fb918, type: 3}
+  SpawnerTile: {fileID: 2363575345980441741, guid: 7f8a178670e7fe4468d8d71c8b42aac6, type: 3}
+  GoalTile: {fileID: 2363575345980441741, guid: 84446a681592370409252c04d5a18bef, type: 3}
   Tile: {fileID: 3223859646175902144, guid: daf8b4dd611785e4d88b2a633cafb04d, type: 3}
   MapSize: 0a0000000a000000
 --- !u!1660057539 &9223372036854775807
@@ -498,3 +529,4 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 2135647297}
+  - {fileID: 1131914682}
