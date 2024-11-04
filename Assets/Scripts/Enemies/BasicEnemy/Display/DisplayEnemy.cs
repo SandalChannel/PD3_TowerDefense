@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DisplayEnemy : MonoBehaviour
 {
-    [SerializeField] private GameObject EnemyPrefab;
+    [SerializeField] public GameObject EnemyPrefab;
 
     private Enemy _enemy;
 
