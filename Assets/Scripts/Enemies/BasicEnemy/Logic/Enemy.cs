@@ -1,27 +1,43 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System;
-
-internal class Enemy
+public class Enemy : LogicBase
 {
-    public Cell CurrentCell { get; set; }
+    private Coordinates _position;
+    public Coordinates Position
+    {
+        get => _position;
+        set
+        {
+            //checks to see if anything actually changed or not (otherwise this would be called every frame)
+            if (_position == value) return;
+
+            _position = value;
+            OnPropertyChanged(nameof(Position));
+        }
+    }
+
     public List<Cell> Path { get; set; }
-    public float MovementDelay { get; set; } = 1f;
 
     public Enemy(List<Cell> path)
     {
         Path = path;
-        CurrentCell = path[0];
     }
 
-    public void Tick()
+    public float MovementDelay { get; } = 1f;
+
+    public float health { get; set; } = 100f;
+
+    public void AdvancePath()
     {
         if (Path?.Count > 0)
         {
-            CurrentCell = Path[0];
+            Position = Path[0].Coordinates;
             Path.Remove(Path[0]);
         }
     }
 
     
+
+
 }

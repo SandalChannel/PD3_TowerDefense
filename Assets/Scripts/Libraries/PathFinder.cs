@@ -9,6 +9,8 @@ public static class PathFinder
 
     public static List<Cell> FindPath(Cell start, Cell end, List<Cell> nodes)
     {
+        nodes.Add(end); //adds the end to the list of possible destination tiles
+        
         List<Cell> path = new List<Cell>();
 
         //build the path
@@ -25,7 +27,7 @@ public static class PathFinder
         return path;
     }
 
-    public static Cell FindPathRecursive(Cell current, Cell end, List<Cell> path, List<Cell> nodes)
+    private static Cell FindPathRecursive(Cell current, Cell end, List<Cell> path, List<Cell> nodes)
     {
         foreach (Cell item in nodes)
         {

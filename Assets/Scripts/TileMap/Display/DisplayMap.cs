@@ -9,11 +9,11 @@ public abstract class DisplayMap : MonoBehaviour
     [SerializeField] GameObject SpawnerTile;
     [SerializeField] GameObject GoalTile;
     [SerializeField] GameObject Tile;
-    
 
-    [SerializeField] int[] MapSize = {10, 10};
+    [SerializeField] int[] MapSize = { 10, 10 };
 
-    [SerializeField] List<Coordinates> PathCoords = new List<Coordinates>()
+    [SerializeField]
+    List<Coordinates> PathCoords = new List<Coordinates>()
         {
             new Coordinates(0, 2),
             new Coordinates(1, 2),
@@ -50,8 +50,7 @@ public abstract class DisplayMap : MonoBehaviour
 
     public Map Map { get; set; }
 
-
-    void Awake()
+    public void Awake()
     {
         Map = CreateMap(MapSize);
 
@@ -62,17 +61,9 @@ public abstract class DisplayMap : MonoBehaviour
         InstantiateTiles(Map.GetAllCells());
     }
 
-    //vestigial constructor, managed by Unity now
-    //public DisplayMap(GameObject tile, GameObject grassTile, GameObject pathTile)
-    //{
-    //    Tile = tile;
-    //    PathTile = pathTile;
-    //    GrassTile = grassTile;
-    //}
-
     public void SetMapCellTypes(Map map)
     {
-        //sets the celltype for the path
+        //sets the celltype for the path and other tile types
         foreach (var coords in PathCoords)
         {
             CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Road);
