@@ -15,7 +15,7 @@ public static class CellGenerator
         {
             for (int j = 0; j < width; j++)
             {
-                cells.Add(new Cell(i, j));
+                cells.Add(new Cell(CellType.Grass, i, j));
             }
         }
 

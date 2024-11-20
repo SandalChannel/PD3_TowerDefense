@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
+
 public class DisplayCell : MonoBehaviour
 {
     [SerializeField]
@@ -8,11 +9,10 @@ public class DisplayCell : MonoBehaviour
 
     public CellType CellType => _cellType;
 
-    public Cell Cell { get; private set; }
+    [SerializeField]
+    public Vector2Int Coordinate;
 
-    public virtual void SetModel(Cell cell)
-    {
-        Cell = cell;
+    public Coordinates MapCoordinate => new Coordinates(Coordinate.x, Coordinate.y);
 
-    }
+    public Cell CellLogic => new Cell(CellType, MapCoordinate.X, MapCoordinate.Y);
 }

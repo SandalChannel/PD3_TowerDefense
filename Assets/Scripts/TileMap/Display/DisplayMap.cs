@@ -1,91 +1,40 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class DisplayMap : MonoBehaviour
 {
-    [SerializeField] GameObject GrassTile;
-    [SerializeField] GameObject PathTile;
-    [SerializeField] GameObject BuildableTile;
-    [SerializeField] GameObject SpawnerTile;
-    [SerializeField] GameObject GoalTile;
-    [SerializeField] GameObject Tile;
+    [SerializeField] public GameObject GrassTile;
+    [SerializeField] public GameObject PathTile;
+    [SerializeField] public GameObject BuildableTile;
+    [SerializeField] public GameObject SpawnerTile;
+    [SerializeField] public GameObject GoalTile;
+    [SerializeField] public GameObject Tile;
+    int[] MapSize = { 10, 10 };
 
-    [SerializeField] int[] MapSize = { 10, 10 };
+    public Map Map { get; private set; }
 
-    [SerializeField]
-    List<Coordinates> PathCoords = new List<Coordinates>()
-        {
-            new Coordinates(0, 2),
-            new Coordinates(1, 2),
-            new Coordinates(2, 2),
-            new Coordinates(2, 3),
-            new Coordinates(3, 3),
-            new Coordinates(3, 4),
-            new Coordinates(4, 4),
-            new Coordinates(5, 4),
-            new Coordinates(6, 4),
-            new Coordinates(7, 4),
-            new Coordinates(8, 4),
-            new Coordinates(9, 4)
-        };
-
-    [SerializeField]
-    List<Coordinates> SpawnerCoords = new List<Coordinates>()
-        {
-            new Coordinates(0, 2)
-        };
-
-    [SerializeField]
-    List<Coordinates> GoalCoords = new List<Coordinates>()
-        {
-            new Coordinates(9, 4)
-        };
-
-    [SerializeField]
-    List<Coordinates> BuildableCoords = new List<Coordinates>()
-        {
-            new Coordinates(3, 2),
-            new Coordinates(5, 5)
-        };
-
-    public Map Map { get; set; }
-
+    //ONLY FOR DEBUGGING: map creation is handled in the Editor now.
     public void Awake()
     {
-        Map = CreateMap(MapSize);
-
-        //actually sets the tile type
-        SetMapCellTypes(Map);
-
-        //renders the tiles
-        InstantiateTiles(Map.GetAllCells());
+        if (this.transform.childCount == 0) //map doesnt exist yet
+        {
+            CreateMapInstance();
+        }
+        List<Cell> cells = GetCellsFromChildren();
+        Map = CreateMapFromCells(cells);
     }
 
-    public void SetMapCellTypes(Map map)
+    public void CreateMapInstance()
     {
-        //sets the celltype for the path and other tile types
-        foreach (var coords in PathCoords)
-        {
-            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Road);
-        }
-        foreach (var coords in SpawnerCoords)
-        {
-            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Spawner);
-        }
-        foreach (var coords in GoalCoords)
-        {
-            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Goal);
-        }
-        foreach (var coords in BuildableCoords)
-        {
-            CellTypeSetter.SetCellType(map.GetAllCells(), coords, CellType.Buildable);
-        }
+        Map map = MapGenerator.GenerateMap(MapType.Hexagon, MapSize);
 
+        InstantiateTiles(map.GetAllCells());
     }
 
-    public void InstantiateTiles(List<Cell> map)
+    public void InstantiateTiles(List<Cell> mapCells)
     {
-        foreach (Cell cell in map)
+        foreach (Cell cell in mapCells)
         {
             if (cell.CellType == CellType.Road)
             {
@@ -114,9 +63,21 @@ public abstract class DisplayMap : MonoBehaviour
         }
     }
 
-    public abstract void InstantiateTile(GameObject tile, Cell cell);
+    private List<Cell> GetCellsFromChildren()
+    {
+        DisplayCell[] displayCells = this.GetComponentsInChildren<DisplayCell>();
 
-    public abstract Map CreateMap(int[] mapSize);
+        List<Cell> cells = new List<Cell>();
+        foreach (DisplayCell displayCell in displayCells)
+        {
+            cells.Add(displayCell.CellLogic);
+        }
+        return cells;
+    }
+
+    public abstract Map CreateMapFromCells(List<Cell> cells);
+
+    public abstract void InstantiateTile(GameObject tile, Cell cell);
 
 }
 

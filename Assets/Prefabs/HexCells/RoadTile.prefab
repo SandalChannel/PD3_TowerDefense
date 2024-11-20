@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.192
       objectReference: {fileID: 0}
+    - target: {fileID: 6641339461186139644, guid: daf8b4dd611785e4d88b2a633cafb04d, type: 3}
+      propertyPath: _cellType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6892270530480020241, guid: daf8b4dd611785e4d88b2a633cafb04d, type: 3}
       propertyPath: _cellType
       value: 1

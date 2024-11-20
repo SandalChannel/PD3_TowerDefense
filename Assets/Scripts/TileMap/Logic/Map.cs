@@ -2,10 +2,6 @@ using System.Collections.Generic;
 
 public class Map
 {
-    
-    
-    public int Width { get; set; }
-    public int Height { get; set; }
 
     public MapType Type { get; set; }
 
@@ -16,14 +12,17 @@ public class Map
         return Cells;
     }
 
-    public Map(MapType mapType ,int width, int height)
+    public Map(MapType mapType, int width, int height) //use when generating new map
     {
-        Width = width;
-        Height = height;
         Type = mapType;
 
         Cells = CellGenerator.GenerateCells(width, height);
 
+    }
+
+    public Map(MapType mapType, List<Cell> cells) //use when getting map from list of cells
+    {
+        Cells = cells;
     }
 }
 

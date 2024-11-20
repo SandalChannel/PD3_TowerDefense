@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: _cellType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 797013851282093725, guid: 03b4c25bb80551246a43474ff3abbab2, type: 3}
+      propertyPath: _cellType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1870935694225226343, guid: 03b4c25bb80551246a43474ff3abbab2, type: 3}
       propertyPath: m_Name
       value: RoadCell
