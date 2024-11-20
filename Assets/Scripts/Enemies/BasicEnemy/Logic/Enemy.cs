@@ -24,7 +24,7 @@ public class Enemy : LogicBase
         Path = path;
     }
 
-    public float MovementDelay { get; } = 1f;
+    public float MovementDelay { get; } = 0.5f;
 
     public float health { get; set; } = 100f;
 

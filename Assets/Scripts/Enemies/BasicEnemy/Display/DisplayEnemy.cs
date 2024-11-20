@@ -8,8 +8,8 @@ using UnityEngine;
 public class DisplayEnemy : DisplayBase<Enemy>
 {
     public GameObject Prefab;
-    
-    private float movementCountdown = 1f;
+
+    private float movementCountdown;
 
     //all changed properties will react to this
     protected override void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -18,7 +18,7 @@ public class DisplayEnemy : DisplayBase<Enemy>
         if (e.PropertyName == nameof(Logic.Position))
         {
             //update position
-            transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position); //TODO: ADD ACTUAL OBJECT SCALE
+            transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
         }
     }
 
