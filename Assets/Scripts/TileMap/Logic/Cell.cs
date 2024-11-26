@@ -1,5 +1,5 @@
-using Unity.VisualScripting;
-
+using System;
+using System.Numerics;
 public class Cell
 {
     public CellType CellType { get; set; }
@@ -11,18 +11,7 @@ public class Cell
         Coordinates = new Coordinates(xPos, yPos);
     }
 
-    public bool IsAdjacent(Cell other)
-    {
-        if (other == null) return false;
-
-        if ((this.Coordinates.X <= other.Coordinates.X + 1 && this.Coordinates.X >= other.Coordinates.X - 1) &&
-            (this.Coordinates.Y <= other.Coordinates.Y + 1 && this.Coordinates.Y >= other.Coordinates.Y - 1))
-        {
-            return true;
-        }
-
-        return false;
-    }
+    
 
     public override string ToString()
     {

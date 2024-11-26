@@ -3,6 +3,8 @@ using System.Numerics;
 using System;
 public class Enemy : LogicBase
 {
+    public bool IsAlive { get; set; } = true;
+    
     private Coordinates _position;
     public Coordinates Position
     {
@@ -22,11 +24,25 @@ public class Enemy : LogicBase
     public Enemy(List<Cell> path)
     {
         Path = path;
+        Position = path[0].Coordinates;
     }
 
     public float MovementDelay { get; } = 0.5f;
 
-    public float health { get; set; } = 100f;
+
+    private float _health = 100f;
+    public float Health
+    {
+        get => _health;
+        set
+        {
+            //checks to see if anything actually changed or not (otherwise this would be called every frame)
+            if (_health == value) return;
+
+            _health = value;
+            OnPropertyChanged(nameof(Health));
+        }
+    }
 
     public void AdvancePath()
     {

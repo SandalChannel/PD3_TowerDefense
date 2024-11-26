@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class DisplayEnemy : DisplayBase<Enemy>
 {
+    [SerializeField] TextMeshPro _healthText;
+    
     public GameObject Prefab;
 
     private float movementCountdown;
@@ -20,6 +23,19 @@ public class DisplayEnemy : DisplayBase<Enemy>
             //update position
             transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
         }
+        //only update the health view if the changed property is this display's health
+        if (e.PropertyName == nameof(Logic.Health))
+        {
+            _healthText.text = Logic.Health.ToString();
+            
+            //update health
+            if (Logic.Health <= 0 && this != null)
+            {
+                Logic.IsAlive = false;
+                Destroy(this.gameObject);
+            }
+        }
+
     }
 
     void Start()

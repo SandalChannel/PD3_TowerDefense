@@ -31,7 +31,7 @@ public static class PathFinder
     {
         foreach (Cell item in nodes)
         {
-            if (!path.Contains(item) && (item.IsAdjacent(current)) )//&& //the next cell cannot have been used before, and has to be adjacent to the current cell
+            if (!path.Contains(item) && (item.Coordinates.IsAdjacentHex(current.Coordinates)) )//&& //the next cell cannot have been used before, and has to be adjacent to the current cell
                //(Math.Abs((end.Coordinates.X + end.Coordinates.Y) - (item.Coordinates.X + item.Coordinates.Y))) <= Math.Abs(((end.Coordinates.X + end.Coordinates.Y) - (current.Coordinates.X + current.Coordinates.Y)))) //checks to see which is closer to the end //DIAGONALS ARE ALLOWED
             {
                 return item;
