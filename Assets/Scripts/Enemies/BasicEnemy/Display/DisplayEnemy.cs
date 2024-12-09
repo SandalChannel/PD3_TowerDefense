@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,8 +10,8 @@ using UnityEngine;
 public class DisplayEnemy : DisplayBase<Enemy>
 {
     [SerializeField] TextMeshPro _healthText;
-    
-    public GameObject Prefab;
+
+    Color originalColour;
 
     private float movementCountdown;
 
@@ -21,15 +22,18 @@ public class DisplayEnemy : DisplayBase<Enemy>
         if (e.PropertyName == nameof(Logic.Position))
         {
             //update position
-            transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
+            //transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
+            
+            StartCoroutine(MoveAnimation(0.2f));
         }
         //only update the health view if the changed property is this display's health
-        if (e.PropertyName == nameof(Logic.Health))
+        if (e.PropertyName == nameof(Logic.Health) && this != null)
         {
+            StartCoroutine(DamageFlash(0.2f));
             _healthText.text = Logic.Health.ToString();
             
-            //update health
-            if (Logic.Health <= 0 && this != null)
+            //died
+            if (Logic.Health <= 0)
             {
                 Logic.IsAlive = false;
                 Destroy(this.gameObject);
@@ -42,6 +46,8 @@ public class DisplayEnemy : DisplayBase<Enemy>
     {
         movementCountdown = Logic.MovementDelay;
         HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
+
+        originalColour = this.GetComponent<Renderer>().material.color;
     }
 
     void Update()
@@ -51,6 +57,37 @@ public class DisplayEnemy : DisplayBase<Enemy>
         {
             Logic.AdvancePath();
             movementCountdown = Logic.MovementDelay;
+        }
+    }
+
+    IEnumerator MoveAnimation(float moveDuration)
+    {
+        Vector3 startPosition = CoordinateConverter.HexToVector(this.transform.lossyScale, Logic.PrevPosition);
+        Vector3 endPosition = CoordinateConverter.HexToVector(this.transform.lossyScale, Logic.Position);
+
+        float timer = 0f;
+        while (timer < moveDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / moveDuration;
+
+            this.transform.position = Vector3.Lerp(startPosition, endPosition, progress);
+            yield return null; //needs to be in the for loop so that it doesnt execute the whole for loop in one frame
+        }
+    }
+
+    IEnumerator DamageFlash(float flashDuration)
+    {
+        float timer = 0f;
+        while (timer < flashDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / flashDuration;
+            float sin = Mathf.Sin(progress * Mathf.PI);
+
+
+            this.GetComponent<Renderer>().material.color = Color.Lerp(originalColour, Color.red, sin);
+            yield return null;
         }
     }
 }

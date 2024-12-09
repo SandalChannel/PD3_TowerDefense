@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System;
+using UnityEngine.Tilemaps;
 public class Enemy : LogicBase
 {
     public bool IsAlive { get; set; } = true;
@@ -18,6 +19,7 @@ public class Enemy : LogicBase
             OnPropertyChanged(nameof(Position));
         }
     }
+    public Coordinates PrevPosition;
 
     public List<Cell> Path { get; set; }
 
@@ -48,12 +50,19 @@ public class Enemy : LogicBase
     {
         if (Path?.Count > 0)
         {
+            PrevPosition = Position;
             Position = Path[0].Coordinates;
             Path.Remove(Path[0]);
         }
     }
 
-    
+    public void TryAttack(Cell targetCastle)
+    {
+        if (targetCastle.Coordinates == Position)
+        {
+            //TODO
+        }
+    }
 
 
 }
