@@ -8,6 +8,9 @@ using TMPro;
 using UnityEngine;
 using Display.Libraries;
 using Logic.Enemies;
+using Logic.Libraries;
+using Display.Game;
+using Logic.TileMap;
 
 namespace Display.Enemies
 {
@@ -48,7 +51,7 @@ namespace Display.Enemies
 
         void Start()
         {
-            movementCountdown = Logic.MovementDelay;
+            movementCountdown = Logic.ActionDelay;
             HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
 
             originalColour = this.GetComponent<Renderer>().material.color;
@@ -60,7 +63,8 @@ namespace Display.Enemies
             if (movementCountdown < 0f && Logic != null)
             {
                 Logic.AdvancePath();
-                movementCountdown = Logic.MovementDelay;
+                Logic.TryAttack();
+                movementCountdown = Logic.ActionDelay;
             }
         }
 

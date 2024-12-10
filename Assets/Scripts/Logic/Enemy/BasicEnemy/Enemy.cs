@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System;
 using Logic.TileMap;
+using Logic.Castles;
 
 namespace Logic.Enemies
 {
@@ -32,7 +33,7 @@ namespace Logic.Enemies
             Position = path[0].Coordinates;
         }
 
-        public float MovementDelay { get; } = 0.5f;
+        public float ActionDelay { get; } = 0.5f;
 
 
         private float _health = 100f;
@@ -49,6 +50,8 @@ namespace Logic.Enemies
             }
         }
 
+        private readonly float _damage = 10f;
+
         public void AdvancePath()
         {
             if (Path?.Count > 0)
@@ -59,12 +62,16 @@ namespace Logic.Enemies
             }
         }
 
-        public void TryAttack(Cell targetCastle)
+        public void TryAttack()
         {
-            if (targetCastle.Coordinates == Position)
+            foreach (Castle castle in Castle.AllInstances)
             {
-                //TODO
+                if (castle.Position == Position)
+                {
+                    castle.Health -= _damage;
+                }
             }
+
         }
 
 

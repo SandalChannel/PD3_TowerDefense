@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Logic.TileMap
 {
-    public struct Coordinates
+    public readonly struct Coordinates
     {
 
 

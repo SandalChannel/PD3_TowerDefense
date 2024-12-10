@@ -1,6 +1,3 @@
-using System;
-using System.Numerics;
-
 namespace Logic.TileMap
 {
     public class Cell

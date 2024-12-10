@@ -7,6 +7,8 @@ using Display.Towers;
 using Logic.Game;
 using Logic.Enemies;
 using Logic.Towers;
+using Display.Castles;
+using Logic.Castles;
 
 namespace Display.Game
 {
@@ -41,6 +43,7 @@ namespace Display.Game
         {
             mapDisplay = FindAnyObjectByType<DisplayMap>();
             _game = new GameLogic(mapDisplay.Map);
+            
             SpawnCountdown = _game.SpawnDelay;
             EnemySpawnCount = _game.EnemiesToSpawn;
             _game.EnemySpawned += HandleObjectSpawned;
