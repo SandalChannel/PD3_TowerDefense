@@ -7,10 +7,11 @@ using Command;
 using Logic.Game;
 using StatePattern;
 using Logic.Enemies.States;
+using System.Diagnostics;
 
 namespace Logic.Enemies
 {
-    public class Enemy : LogicBase, IHasCoordinate, IHasHealth
+    public class Enemy : LogicBase, IHasCoordinate, IHasHealth, ICanMove
     {
         public StateMachine StateMachine { get; set; }
         public IState IdleState { get; }
@@ -31,7 +32,7 @@ namespace Logic.Enemies
                 OnPropertyChanged(nameof(Position));
             }
         }
-        public Coordinates PrevPosition;
+        public Coordinates PrevPosition { get; set; }
 
         public List<Cell> Path { get; set; }
 
@@ -44,6 +45,7 @@ namespace Logic.Enemies
             IdleState = new IdleState(this);
             WalkState = new WalkState(this);
             AttackState = new AttackState(this);
+
             StateMachine = new StateMachine(IdleState);
         }
 

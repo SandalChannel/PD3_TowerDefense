@@ -36,7 +36,7 @@ namespace Display.Castles
 
         protected override void HandleObjectDestroy()
         {
-            if (this.gameObject != null)
+            if (this != null && this.gameObject != null)
             {
                 Destroy(this.gameObject);
             }

@@ -16,7 +16,7 @@ namespace Display.Towers
         protected override void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             //only update the posistion if the changed property is this display's position
-            if (e.PropertyName == nameof(Logic.Position))
+            if (e.PropertyName == nameof(Logic.Position) && this != null)
             {
                 //update position
                 transform.position = CoordinateConverter.HexToVector(Vector3.one, Logic.Position);
@@ -25,7 +25,7 @@ namespace Display.Towers
 
         protected override void HandleObjectDestroy()
         {
-            if (this.gameObject != null)
+            if (this != null && this.gameObject != null)
             {
                 Destroy(this.gameObject);
             }

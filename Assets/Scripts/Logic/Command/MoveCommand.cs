@@ -4,7 +4,7 @@ using System;
 
 namespace Logic.Command
 {
-    public class MoveCommand<T> : ICommand where T : Interfaces.IHasCoordinate
+    public class MoveCommand<T> : ICommand where T : Interfaces.IHasCoordinate, Interfaces.ICanMove
     {
         private readonly T _model;
         private readonly Coordinates _destination;
@@ -20,6 +20,7 @@ namespace Logic.Command
 
         public void Execute()
         {
+            _model.PrevPosition = _model.Position;
             _model.Position = _destination;
         }
 

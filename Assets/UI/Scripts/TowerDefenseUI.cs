@@ -19,7 +19,7 @@ namespace UI
         //reacts to the event
         protected void HandleCastlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Castle.Health))
+            if (Castle != null && e.PropertyName == nameof(Castle.Health))
             {
                 _towerHPUI.ChangeHP((int)Castle.Health);
             }

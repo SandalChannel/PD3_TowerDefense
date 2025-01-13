@@ -27,11 +27,12 @@ namespace Display.Enemies
         protected override void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             //only update the posistion if the changed property is this display's position
-            if (e.PropertyName == nameof(Logic.Position))
+            if (e.PropertyName == nameof(Logic.Position) && this != null)
             {
                 //update position
                 //transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
-                
+
+                Debug.Log(Logic.Position);
 
                 StartCoroutine(MoveAnimation(0.2f));
             }
@@ -46,7 +47,7 @@ namespace Display.Enemies
 
         protected override void HandleObjectDestroy()
         {
-            if (this.gameObject != null)
+            if (this != null && this.gameObject != null)
             {
                 Destroy(this.gameObject);
                 StopAllCoroutines();

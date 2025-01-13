@@ -13,7 +13,7 @@ namespace Logic.Game
     public class GameLogic
     {
         public event Action<LogicBase> ObjectSpawned;
-        public int EnemiesToSpawn { get; } = 1;
+        public int EnemiesToSpawn { get; } = 6;
         public float SpawnDelay { get; } = 2f;
 
         public static float GameTime { get; set; } = 0f;
@@ -39,6 +39,9 @@ namespace Logic.Game
             //ObjectSpawned?.Invoke(activeEnemy);
             SpawnCommand<Enemy> spawnCommand = new(activeEnemy, ObjectSpawned, GameTime);
             CommandHistory.ExecuteCommand(spawnCommand);
+
+            MoveCommand<Enemy> moveCommand = new(activeEnemy, starts[0].Coordinates, GameTime);
+            CommandHistory.ExecuteCommand(moveCommand);
         }
 
         public void SpawnOrRemoveTower(Coordinates pos)
@@ -66,13 +69,11 @@ namespace Logic.Game
 
         public void ReplayCommandAtCurrentTime()
         {
-            List<ICommand> reverseReplayList = CommandHistory.ReplayStack;
-            reverseReplayList.Reverse();
-            
-            while (reverseReplayList[0].Timestamp <= GameTime)
+
+            while (CommandHistory.ReplayStack[0].Timestamp <= GameTime)
             {
-                CommandHistory.ReplayCommand(reverseReplayList[0]);
-                reverseReplayList.RemoveAt(0);
+                CommandHistory.ReplayCommand(CommandHistory.ReplayStack[0]);
+                CommandHistory.ReplayStack.RemoveAt(0);
             }
             
             
