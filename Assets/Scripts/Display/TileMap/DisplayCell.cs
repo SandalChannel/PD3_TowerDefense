@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 using Logic.TileMap;
 
 namespace Display.TileMap
@@ -19,11 +18,10 @@ namespace Display.TileMap
         public CellType CellType => _cellType;
 
         [SerializeField]
-        public Vector2Int Coordinate;
+        private Vector2Int _coordinate;
+        public Coordinates MapCoordinate { get => new(_coordinate.x, _coordinate.y); set { _coordinate = new(value.X, value.Y); } }
 
-        public Coordinates MapCoordinate => new Coordinates(Coordinate.x, Coordinate.y);
-
-        public Cell CellLogic => new Cell(CellType, MapCoordinate.X, MapCoordinate.Y);
+        public Cell CellLogic => new(CellType, MapCoordinate.X, MapCoordinate.Y);
 
         private void Start()
         {

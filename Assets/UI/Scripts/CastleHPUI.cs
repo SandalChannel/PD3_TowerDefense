@@ -5,7 +5,7 @@ namespace UI
 {
     public class CastleHPUI
     {
-        private VisualElement _TowerHPPanel;
+        private readonly VisualElement _TowerHPPanel;
 
         public CastleHPUI(int HP, VisualElement rootElement)
         {
@@ -13,7 +13,6 @@ namespace UI
 
             ChangeHP(HP);
         }
-
 
         public void ChangeHP(int HP)
         {

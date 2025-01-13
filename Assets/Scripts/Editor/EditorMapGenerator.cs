@@ -18,8 +18,8 @@ namespace Editor
             GameObject Tile = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HexCells/HexTile.prefab");
 
 
-            GameObject map = new GameObject("MapManager");
-            DisplayMap displayMap = map.gameObject.AddComponent<DisplayMapHex>();
+            GameObject map = new("MapManager");
+            DisplayMap displayMap = map.AddComponent<DisplayMapHex>();
 
             displayMap.GrassTile = GrassTile;
             displayMap.PathTile = PathTile;

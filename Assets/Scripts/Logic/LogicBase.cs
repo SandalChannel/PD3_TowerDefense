@@ -1,7 +1,3 @@
-using Codice.CM.SEIDInfo;
-using CodiceApp.EventTracking;
-using Logic.Enemies;
-using Logic.Game;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,26 +8,19 @@ public abstract class LogicBase : INotifyPropertyChanged
     //this dictionary contains a list of every instance of every type that inherits from LogicBase
     private static readonly Dictionary<Type, List<LogicBase>> _allInstances = new();
 
-    protected LogicBase()
+    private protected LogicBase()
     {
         Type type = GetType();
         if (!_allInstances.ContainsKey(type)) //if there is no key of that type yet in the dictionary, make one
         {
-            _allInstances[type] = new List<LogicBase>();
+            _allInstances[type] = new();
         }
         _allInstances[type].Add(this); //if there is, add it to that key
     }
 
-    
-    //destructor, is cool but not used here in favour of OnObjectDestroyed
-    //~LogicBase()
-    //{
-    //    
-    //}
-
     public static List<T> GetAllInstancesOfType<T>() where T : LogicBase
     {
-        List<T> instances = new List<T>();
+        List<T> instances = new();
         //check if the dictionary has a list for the type that T has
         if (_allInstances.ContainsKey(typeof(T)))
         {
@@ -46,11 +35,8 @@ public abstract class LogicBase : INotifyPropertyChanged
     }
 
 
-
     //event created here so we don't have to create one in every model class
     public event PropertyChangedEventHandler PropertyChanged;
-
-    //public event Action ObjectSpawned;
 
     public event Action ObjectDestroyed;
 
@@ -58,11 +44,6 @@ public abstract class LogicBase : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-
-    //protected virtual void OnObjectSpawned()
-    //{
-    //    ObjectSpawned?.Invoke();
-    //}
 
     public virtual void OnObjectDestroyed()
     {

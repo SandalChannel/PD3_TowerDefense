@@ -1,7 +1,6 @@
 using Logic.Castles;
 using StatePattern;
 using UI.States;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -40,7 +39,6 @@ namespace UI
             EndState = new EndState(this, EndDocument);
             StateMachine = new StateMachine(PlayState);
 
-
             Castle.ObjectDestroyed += HandleCastleDestroy;
         }
 
@@ -53,7 +51,6 @@ namespace UI
         {
             StateMachine.Update();
         }
-
     }
 }
 

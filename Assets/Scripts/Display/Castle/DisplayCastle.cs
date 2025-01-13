@@ -4,24 +4,22 @@ using UnityEngine;
 using Logic.Castles;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
-using Display.Enemies;
-using Logic.Enemies;
-using Logic.Game;
 
 namespace Display.Castles
 {
     public class DisplayCastle : DisplayBase<Castle>
     {
         [SerializeField]
-        public Vector2Int Coordinate;
-        public Coordinates MapCoordinate => new Coordinates(Coordinate.x, Coordinate.y);
+        private Vector2Int _coordinate;
+        public Coordinates MapCoordinate { get => new(_coordinate.x, _coordinate.y); set { _coordinate = new(value.X, value.Y); } }
 
         [SerializeField] private float Health = 100f;
 
         [SerializeField] private TextMeshPro _healthText;
 
-        Color originalColour;
+        private Color _originalColour;
+
+        private Color _hitColour = Color.red;
 
         //all changed properties will react to this
         protected override void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -49,7 +47,7 @@ namespace Display.Castles
             Logic = new Castle(MapCoordinate, Health);
             HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
 
-            originalColour = this.GetComponentInChildren<Renderer>().material.color;
+            _originalColour = this.GetComponentInChildren<Renderer>().material.color;
         }
 
         IEnumerator DamageFlash(float flashDuration)
@@ -61,8 +59,7 @@ namespace Display.Castles
                 float progress = timer / flashDuration;
                 float sin = Mathf.Sin(progress * Mathf.PI);
 
-
-                this.GetComponentInChildren<Renderer>().material.color = Color.Lerp(originalColour, Color.red, sin);
+                this.GetComponentInChildren<Renderer>().material.color = Color.Lerp(_originalColour, _hitColour, sin);
                 yield return null;
             }
         }

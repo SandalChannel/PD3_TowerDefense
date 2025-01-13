@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using Logic.TileMap;
 using Logic.Libraries;
@@ -9,18 +8,17 @@ namespace Display.TileMap
 {
     public abstract class DisplayMap : MonoBehaviour
     {
-        [SerializeField] public GameObject GrassTile;
-        [SerializeField] public GameObject PathTile;
-        [SerializeField] public GameObject BuildableTile;
-        [SerializeField] public GameObject SpawnerTile;
-        [SerializeField] public GameObject GoalTile;
-        [SerializeField] public GameObject Tile;
-        int[] MapSize = { 10, 10 };
+        public GameObject GrassTile;
+        public GameObject PathTile;
+        public GameObject BuildableTile;
+        public GameObject SpawnerTile;
+        public GameObject GoalTile;
+        public GameObject Tile;
+        private readonly int[] MapSize = { 10, 10 };
 
         public Map Map { get; private set; }
 
-        //ONLY FOR DEBUGGING: map creation is handled in the Editor now.
-        public void Awake()
+        private void Awake()
         {
             if (this.transform.childCount == 0) //map doesnt exist yet
             {
@@ -37,7 +35,7 @@ namespace Display.TileMap
             InstantiateTiles(map.GetAllCells());
         }
 
-        public void InstantiateTiles(List<Cell> mapCells)
+        private void InstantiateTiles(List<Cell> mapCells)
         {
             foreach (Cell cell in mapCells)
             {
@@ -72,7 +70,7 @@ namespace Display.TileMap
         {
             DisplayCell[] displayCells = this.GetComponentsInChildren<DisplayCell>();
 
-            List<Cell> cells = new List<Cell>();
+            List<Cell> cells = new();
             foreach (DisplayCell displayCell in displayCells)
             {
                 cells.Add(displayCell.CellLogic);

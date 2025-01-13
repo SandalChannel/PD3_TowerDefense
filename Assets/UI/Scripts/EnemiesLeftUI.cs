@@ -5,7 +5,7 @@ namespace UI
 {
     public class EnemiesLeftUI
     {
-        private VisualElement _EnemiesLeftPanel;
+        private readonly VisualElement _EnemiesLeftPanel;
 
         public EnemiesLeftUI(int count, VisualElement rootElement)
         {
@@ -13,7 +13,6 @@ namespace UI
 
             UpdateEnemyCount(count);
         }
-
 
         public void UpdateEnemyCount(int count)
         {

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using Display.Libraries;
 using Logic.TileMap;
@@ -13,12 +12,12 @@ namespace Display.TileMap
         {
             GameObject tileInstance = Instantiate(tile, CoordinateConverter.GridToVector(tile.transform.lossyScale, cell.Coordinates), Quaternion.identity, this.transform);
 
-            tileInstance.GetComponent<DisplayCell>().Coordinate = new Vector2Int(cell.Coordinates.X, cell.Coordinates.Y); //sets the coordinates of the cell inside the DisplayCell component, for later reference.
+            tileInstance.GetComponent<DisplayCell>().MapCoordinate = cell.Coordinates; //sets the coordinates of the cell inside the DisplayCell component, for later reference.
         }
 
         public override Map CreateMapFromCells(List<Cell> cells)
         {
-            Map map = new Map(MapType.Grid, cells);
+            Map map = new(MapType.Grid, cells);
             return map;
         }
     }

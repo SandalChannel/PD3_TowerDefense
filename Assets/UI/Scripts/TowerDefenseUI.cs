@@ -14,8 +14,6 @@ namespace UI
 
         private List<Enemy> Enemies => LogicBase.GetAllInstancesOfType<Enemy>();
 
-
-
         //reacts to the event
         protected void HandleCastlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -25,26 +23,14 @@ namespace UI
             }
         }
 
-        //protected void HandleEnemyDestroy()
-        //{
-        //    _enemyUI.UpdateEnemyCount(Enemies.Count);
-        //}
-
-
-
         private void Update()
         {
-            _enemyUI.UpdateEnemyCount(Enemies.Count); //updates every frame, COULD be more efficient
+            _enemyUI.UpdateEnemyCount(Enemies.Count); //updates every frame, could be more efficient
         }
 
         private void Start()
         {
             Castle.PropertyChanged += HandleCastlePropertyChanged;
-            //foreach (Enemy enemy in Enemies) //also subscribes to all 
-            //{
-            //    enemy.ObjectDestroyed += HandleEnemyDestroy;
-            //}
-
 
             VisualElement rootElement = GetComponent<UIDocument>().rootVisualElement;
 
@@ -53,7 +39,6 @@ namespace UI
 
             _towerHPUI = new CastleHPUI((int)Castle.Health, TowerHPElement); //creates a PlayerView class with the name White for the element of PlayerPanel1
             _enemyUI = new EnemiesLeftUI(Enemies.Count, EnemiesLeftElement);
-            //_player2 = new PlayerView("Black", player2Element, CapturedPieceTemplate);
         }
     }
 }

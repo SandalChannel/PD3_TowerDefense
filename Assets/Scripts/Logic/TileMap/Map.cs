@@ -5,7 +5,6 @@ namespace Logic.TileMap
 {
     public class Map
     {
-
         public MapType Type { get; set; }
 
         public List<Cell> Cells { get; set; }

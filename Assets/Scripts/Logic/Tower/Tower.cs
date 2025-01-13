@@ -40,8 +40,7 @@ namespace Logic.Towers
             {
                 if (this.Position.IsAdjacentHex(GetAllInstancesOfType<Enemy>()[i].Position))
                 {
-                    //Enemy.AllInstances[i].Health -= _damage;
-                    AttackCommand<Enemy> attackCommand = new AttackCommand<Enemy>(GetAllInstancesOfType<Enemy>()[i], _damage, GameLogic.GameTime);
+                    AttackCommand<Enemy> attackCommand = new(GetAllInstancesOfType<Enemy>()[i], _damage, GameLogic.GameTime);
                     CommandHistory.ExecuteCommand(attackCommand);
                 }
             }

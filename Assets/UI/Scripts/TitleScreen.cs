@@ -10,7 +10,6 @@ namespace UI
         private Button _startButton;
         private Button _quitButton;
 
-
         private void Start()
         {
             VisualElement rootElement = GetComponent<UIDocument>().rootVisualElement;

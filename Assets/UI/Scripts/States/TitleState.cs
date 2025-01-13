@@ -1,6 +1,5 @@
 using StatePattern;
 using UI;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -14,7 +13,6 @@ public class TitleState : IState
         _manager = UIManager;
         _pauseScreen = pauseScreen;
     }
-
 
     public void OnEnter()
     {

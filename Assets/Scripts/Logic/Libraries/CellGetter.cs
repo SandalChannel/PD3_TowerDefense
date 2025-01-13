@@ -19,7 +19,7 @@ namespace Logic.Libraries
 
         public static List<Cell> GetCellsByType(List<Cell> cells, CellType type)
         {
-            List<Cell> result = new List<Cell>();
+            List<Cell> result = new();
             foreach (Cell cell in cells)
             {
                 if (cell.CellType == type)

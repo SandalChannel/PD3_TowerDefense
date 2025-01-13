@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StatePattern
 {
@@ -11,12 +7,7 @@ namespace StatePattern
         private IState _currentState;
         public StateMachine(IState startState)
         {
-            if (startState == null)
-            {
-                throw new InvalidOperationException("Startstate cannot be null");
-            }
-            
-            _currentState = startState;
+            _currentState = startState ?? throw new InvalidOperationException("Startstate cannot be null");
             _currentState?.OnEnter();
         }
 

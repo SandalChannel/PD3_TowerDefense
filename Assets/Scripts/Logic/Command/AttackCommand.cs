@@ -1,5 +1,4 @@
 ﻿using Command;
-using System;
 
 namespace Logic.Command
 {
@@ -17,7 +16,6 @@ namespace Logic.Command
             Timestamp = time;
         }
         
-
         public void Execute()
         {
             _target.Health -= _damage;

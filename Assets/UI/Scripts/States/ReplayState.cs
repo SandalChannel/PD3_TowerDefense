@@ -1,7 +1,5 @@
 using UnityEngine;
 using StatePattern;
-using UnityEditor;
-using UnityEngine.UIElements;
 using Logic.Game;
 using UnityEngine.SceneManagement;
 
@@ -14,8 +12,6 @@ namespace UI.States
         public ReplayState(UIManager UIManager)
         {
             _manager = UIManager;
-
-
         }
 
         public void OnEnter()
@@ -26,7 +22,6 @@ namespace UI.States
 
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
-
         }
 
         public void OnExit()

@@ -1,9 +1,4 @@
 ﻿using StatePattern;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logic.Enemies.States
 {
@@ -23,7 +18,7 @@ namespace Logic.Enemies.States
 
         public void Update()
         {
-            //instantly switch to the move state on start
+            //instantly switch to the move state on start (current/default behaviour)
             _enemy.StateMachine.MoveToState(_enemy.WalkState);
         }
 

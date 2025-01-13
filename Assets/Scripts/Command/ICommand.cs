@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Command
+﻿namespace Command
 {
     public interface ICommand
     {

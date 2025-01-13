@@ -1,10 +1,8 @@
 using UnityEngine;
 using StatePattern;
-using UnityEditor;
 using Command;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using Logic.Game;
 
 namespace UI.States
 {

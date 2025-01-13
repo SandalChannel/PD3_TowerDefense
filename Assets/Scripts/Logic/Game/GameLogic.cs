@@ -5,7 +5,6 @@ using Logic.Towers;
 using Logic.TileMap;
 using Logic.Libraries;
 using Logic.Command;
-using Logic.Castles;
 using Command;
 
 namespace Logic.Game
@@ -34,7 +33,7 @@ namespace Logic.Game
             List<Cell> starts = CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Spawner);
             List<Cell> ends = CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Goal);
             List<Cell> allRoads = CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Road);
-            Enemy activeEnemy = new Enemy(PathFinder.FindPath(starts[0], ends[0], allRoads));
+            Enemy activeEnemy = new(PathFinder.FindPath(starts[0], ends[0], allRoads));
             
             //ObjectSpawned?.Invoke(activeEnemy);
             SpawnCommand<Enemy> spawnCommand = new(activeEnemy, ObjectSpawned, GameTime);
@@ -52,16 +51,14 @@ namespace Logic.Game
                 if (LogicBase.GetAllInstancesOfType<Tower>()[i].Position == pos) //remove tower if the position already contains one
                 {
                     canSpawn = false;
-                    //LogicBase.GetAllInstancesOfType<Tower>()[i].OnObjectDestroyed();
                     DestroyCommand<Tower> destroyCommand = new(LogicBase.GetAllInstancesOfType<Tower>()[i], GameTime);
                     CommandHistory.ExecuteCommand(destroyCommand);
                 }
             }
             if (canSpawn) //else add a tower
             {
-                Tower activeTower = new Tower(pos);
+                Tower activeTower = new(pos);
 
-                //ObjectSpawned?.Invoke(activeTower);
                 SpawnCommand<Tower> spawnCommand = new(activeTower, ObjectSpawned, GameTime);
                 CommandHistory.ExecuteCommand(spawnCommand);
             }
@@ -75,16 +72,6 @@ namespace Logic.Game
                 CommandHistory.ReplayCommand(CommandHistory.ReplayStack[0]);
                 CommandHistory.ReplayStack.RemoveAt(0);
             }
-            
-            
-            //for (int i = 0; i < CommandHistory.ReplayStack.Count; i++)
-            //{
-            //    if (CommandHistory.ReplayStack[i].Timestamp >= GameTime)
-            //    {
-            //        CommandHistory.ReplayCommand(CommandHistory.ReplayStack[i]);
-            //        CommandHistory.ReplayStack.RemoveAt(i);
-            //    }
-            //}
         }
     }
 }

@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using Logic.TileMap;
-using Logic.Castles;
 using Logic.Interfaces;
 using Logic.Command;
 using Command;
 using Logic.Game;
 using StatePattern;
 using Logic.Enemies.States;
-using System.Diagnostics;
 
 namespace Logic.Enemies
 {
@@ -72,19 +70,8 @@ namespace Logic.Enemies
                     CommandHistory.ExecuteCommand(destroyCommand);
                     return;
                 }
-
-                
-                
             }
         }
-
         public float Damage { get; } = 10f;
-
     }
-
-    
-
-    
-
-    
 }

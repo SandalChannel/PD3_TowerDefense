@@ -1,9 +1,4 @@
-﻿using Codice.Client.BaseCommands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Command
 {
@@ -22,7 +17,6 @@ namespace Command
             if (ReplayStack.Count <= 0)
                 return;
 
-            //ICommand command = ReplayStack.Pop();
             command.Execute();
         }
 

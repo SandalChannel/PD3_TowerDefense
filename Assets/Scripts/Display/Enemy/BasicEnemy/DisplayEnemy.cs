@@ -1,17 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 using Display.Libraries;
 using Logic.Enemies;
-using Logic.Libraries;
-using Display.Game;
-using Logic.TileMap;
-using Logic.Game;
 
 namespace Display.Enemies
 {
@@ -19,9 +11,11 @@ namespace Display.Enemies
     {
         [SerializeField] TextMeshPro _healthText;
 
-        Color originalColour;
+        Color _originalColour;
 
-        private float movementCountdown;
+        Color _hitColour = Color.red;
+
+        private float _movementCountdown;
 
         //all changed properties will react to this
         protected override void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -30,8 +24,6 @@ namespace Display.Enemies
             if (e.PropertyName == nameof(Logic.Position) && this != null)
             {
                 //update position
-                //transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
-
                 StartCoroutine(MoveAnimation(0.2f));
             }
             //only update the health view if the changed property is this display's health
@@ -54,29 +46,27 @@ namespace Display.Enemies
             Destroy(this);
         }
 
-        void Start()
+        private void Start()
         {
-            movementCountdown = Logic.ActionDelay;
+            _movementCountdown = Logic.ActionDelay;
             HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
 
-            originalColour = this.GetComponent<Renderer>().material.color;
+            _originalColour = this.GetComponent<Renderer>().material.color;
 
             
         }
 
-        void Update()
+        private void Update()
         {
-            movementCountdown -= Time.deltaTime;
-            if (movementCountdown < 0f && Logic != null)
+            _movementCountdown -= Time.deltaTime;
+            if (_movementCountdown < 0f && Logic != null)
             {
-                //Logic.AdvancePath();
-                //Logic.TryAttack();
                 Logic.StateMachine.Update();
-                movementCountdown = Logic.ActionDelay;
+                _movementCountdown = Logic.ActionDelay;
             }
         }
 
-        IEnumerator MoveAnimation(float moveDuration)
+        private IEnumerator MoveAnimation(float moveDuration)
         {
             Vector3 startPosition = CoordinateConverter.HexToVector(this.transform.lossyScale, Logic.PrevPosition);
             Vector3 endPosition = CoordinateConverter.HexToVector(this.transform.lossyScale, Logic.Position);
@@ -92,7 +82,7 @@ namespace Display.Enemies
             }
         }
 
-        IEnumerator DamageFlash(float flashDuration)
+        private IEnumerator DamageFlash(float flashDuration)
         {
             float timer = 0f;
             while (timer < flashDuration)
@@ -102,7 +92,7 @@ namespace Display.Enemies
                 float sin = Mathf.Sin(progress * Mathf.PI);
 
 
-                this.GetComponent<Renderer>().material.color = Color.Lerp(originalColour, Color.red, sin);
+                this.GetComponent<Renderer>().material.color = Color.Lerp(_originalColour, _hitColour, sin);
                 yield return null;
             }
         }

@@ -1,6 +1,4 @@
-using Logic.Enemies;
 using Logic.TileMap;
-using System.Collections.Generic;
 using Logic.Game;
 using Logic.Interfaces;
 using Logic.Command;

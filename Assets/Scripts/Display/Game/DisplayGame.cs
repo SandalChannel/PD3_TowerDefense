@@ -1,5 +1,3 @@
-
-using System.Collections.Generic;
 using UnityEngine;
 using Display.TileMap;
 using Display.Enemies;
@@ -7,10 +5,6 @@ using Display.Towers;
 using Logic.Game;
 using Logic.Enemies;
 using Logic.Towers;
-using Display.Castles;
-using Logic.Castles;
-using System;
-using Display.Libraries;
 
 namespace Display.Game
 {
@@ -40,7 +34,7 @@ namespace Display.Game
         }
 
 
-        void Start()
+        private void Start()
         {
             mapDisplay = FindAnyObjectByType<DisplayMap>();
             _game = new GameLogic(mapDisplay.Map);
@@ -50,7 +44,7 @@ namespace Display.Game
             _game.ObjectSpawned += HandleObjectSpawned;
         }
 
-        void Update()
+        private void Update()
         {
             GameLogic.GameTime += Time.deltaTime; //updates the internal gameTime
             
@@ -64,9 +58,8 @@ namespace Display.Game
                 {
                     GameObject hitObject = hitInfo.collider.gameObject;
 
-                    DisplayCell hitCell;
-                    hitObject.TryGetComponent<DisplayCell>(out hitCell);
-                    if (hitCell?.CellType == CellType.Buildable)
+                    hitObject.TryGetComponent<DisplayCell>(out DisplayCell hitCell);
+                    if (hitCell.CellType == CellType.Buildable && hitCell != null)
                     {
                         _game.SpawnOrRemoveTower(hitCell.CellLogic.Coordinates);
                     }
@@ -82,7 +75,6 @@ namespace Display.Game
 
             if (GameLogic.IsReplaying)
             {
-                //Debug.Log(GameLogic.GameTime);
                 _game.ReplayCommandAtCurrentTime();
             }
 

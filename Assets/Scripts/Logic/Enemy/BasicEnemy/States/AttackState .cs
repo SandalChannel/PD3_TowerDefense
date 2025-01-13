@@ -3,11 +3,6 @@ using Logic.Castles;
 using Logic.Command;
 using Logic.Game;
 using StatePattern;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logic.Enemies.States
 {
@@ -32,7 +27,6 @@ namespace Logic.Enemies.States
             {
                 if (LogicBase.GetAllInstancesOfType<Castle>()[i].Position == _enemy.Position)
                 {
-                    //Castle.AllInstances[i].Health -= _damage;
                     AttackCommand<Castle> attackCommand = new(LogicBase.GetAllInstancesOfType<Castle>()[i], _enemy.Damage, GameLogic.GameTime);
                     CommandHistory.ExecuteCommand(attackCommand);
                 }

@@ -33,12 +33,12 @@ namespace Display.Towers
             Destroy(this);
         }
 
-        void Start()
+        private void Start()
         {
             HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
         }
 
-        void Update()
+        private void Update()
         {
             _damageCountdown -= Time.deltaTime;
 

@@ -1,8 +1,5 @@
-﻿using Logic.TileMap;
-using Command;
+﻿using Command;
 using System;
-using Logic.Towers;
-using Logic.Interfaces;
 
 namespace Logic.Command
 {

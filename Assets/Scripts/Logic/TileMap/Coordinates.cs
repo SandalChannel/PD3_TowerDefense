@@ -1,12 +1,9 @@
 using System;
-using System.Runtime.Serialization;
 
 namespace Logic.TileMap
 {
     public readonly struct Coordinates
     {
-
-
         public Coordinates(int x, int y)
         {
             X = x;
