@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cellType: 0
+  _renderer: {fileID: 8927189984738188651}
   Coordinate: {x: 0, y: 0}
 --- !u!1 &3445535691908886635
 GameObject:

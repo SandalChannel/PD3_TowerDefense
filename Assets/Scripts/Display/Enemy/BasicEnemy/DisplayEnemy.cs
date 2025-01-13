@@ -32,8 +32,6 @@ namespace Display.Enemies
                 //update position
                 //transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
 
-                Debug.Log(Logic.Position);
-
                 StartCoroutine(MoveAnimation(0.2f));
             }
             //only update the health view if the changed property is this display's health
