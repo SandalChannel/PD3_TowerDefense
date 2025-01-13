@@ -1,14 +1,22 @@
 using System.Collections.Generic;
-using System.Numerics;
-using System;
 using Logic.TileMap;
 using Logic.Castles;
+using Logic.Interfaces;
+using Logic.Command;
+using Command;
+using Logic.Game;
+using StatePattern;
+using Logic.Enemies.States;
 
 namespace Logic.Enemies
 {
-    public class Enemy : LogicBase
+    public class Enemy : LogicBase, IHasCoordinate, IHasHealth
     {
-        public bool IsAlive { get; set; } = true;
+        public StateMachine StateMachine { get; set; }
+        public IState IdleState { get; }
+        public IState WalkState { get; }
+        public IState AttackState { get; }
+
 
         private Coordinates _position;
         public Coordinates Position
@@ -31,6 +39,12 @@ namespace Logic.Enemies
         {
             Path = path;
             Position = path[0].Coordinates;
+
+
+            IdleState = new IdleState(this);
+            WalkState = new WalkState(this);
+            AttackState = new AttackState(this);
+            StateMachine = new StateMachine(IdleState);
         }
 
         public float ActionDelay { get; } = 0.5f;
@@ -46,34 +60,29 @@ namespace Logic.Enemies
                 if (_health == value) return;
 
                 _health = value;
+
                 OnPropertyChanged(nameof(Health));
-            }
-        }
 
-        private readonly float _damage = 10f;
-
-        public void AdvancePath()
-        {
-            if (Path?.Count > 0)
-            {
-                PrevPosition = Position;
-                Position = Path[0].Coordinates;
-                Path.Remove(Path[0]);
-            }
-        }
-
-        public void TryAttack()
-        {
-            foreach (Castle castle in Castle.AllInstances)
-            {
-                if (castle.Position == Position)
+                if (_health <= 0)
                 {
-                    castle.Health -= _damage;
+                    //OnObjectDestroyed();
+                    DestroyCommand<Enemy> destroyCommand = new(this, GameLogic.GameTime);
+                    CommandHistory.ExecuteCommand(destroyCommand);
+                    return;
                 }
-            }
 
+                
+                
+            }
         }
 
+        public float Damage { get; } = 10f;
 
     }
+
+    
+
+    
+
+    
 }

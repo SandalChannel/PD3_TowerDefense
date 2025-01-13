@@ -4,60 +4,86 @@ using Logic.Enemies;
 using Logic.Towers;
 using Logic.TileMap;
 using Logic.Libraries;
+using Logic.Command;
 using Logic.Castles;
+using Command;
 
 namespace Logic.Game
 {
     public class GameLogic
     {
-        public event EventHandler<ObjectSpawnedOrDestroyedEventArgs<Tower>> TowerSpawned;
-        public event EventHandler<ObjectSpawnedOrDestroyedEventArgs<Enemy>> EnemySpawned;
-
-        public int EnemiesToSpawn { get; } = 6;
+        public event Action<LogicBase> ObjectSpawned;
+        public int EnemiesToSpawn { get; } = 1;
         public float SpawnDelay { get; } = 2f;
 
+        public static float GameTime { get; set; } = 0f;
+
+        public static bool IsReplaying = false;
+
         public Map Map { get; }
-
-
-        public List<Enemy> Enemies { get; set; }
-        public List<Tower> Towers { get; set; }
 
         public GameLogic(Map map)
         {
             Map = map;
-            Enemies = new List<Enemy>();
-            Towers = new List<Tower>();
+
+            GameTime = 0f;
         }
 
         public void SpawnEnemyAtSpawner()
         {
-            Enemy activeEnemy = new Enemy(PathFinder.FindPath(CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Spawner)[0], CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Goal)[0], CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Road)));
-            Enemies.Add(activeEnemy);
-            EnemySpawned?.Invoke(this, new ObjectSpawnedOrDestroyedEventArgs<Enemy>(activeEnemy));
+            List<Cell> starts = CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Spawner);
+            List<Cell> ends = CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Goal);
+            List<Cell> allRoads = CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Road);
+            Enemy activeEnemy = new Enemy(PathFinder.FindPath(starts[0], ends[0], allRoads));
+            
+            //ObjectSpawned?.Invoke(activeEnemy);
+            SpawnCommand<Enemy> spawnCommand = new(activeEnemy, ObjectSpawned, GameTime);
+            CommandHistory.ExecuteCommand(spawnCommand);
+        }
 
-            foreach (Tower tower in Towers) //update the list of enemies available for the towers
+        public void SpawnOrRemoveTower(Coordinates pos)
+        {
+            bool canSpawn = true;
+            for (int i = 0; i < LogicBase.GetAllInstancesOfType<Tower>().Count; i++)
             {
-                tower.Enemies = Enemies;
+                if (LogicBase.GetAllInstancesOfType<Tower>()[i].Position == pos) //remove tower if the position already contains one
+                {
+                    canSpawn = false;
+                    //LogicBase.GetAllInstancesOfType<Tower>()[i].OnObjectDestroyed();
+                    DestroyCommand<Tower> destroyCommand = new(LogicBase.GetAllInstancesOfType<Tower>()[i], GameTime);
+                    CommandHistory.ExecuteCommand(destroyCommand);
+                }
+            }
+            if (canSpawn) //else add a tower
+            {
+                Tower activeTower = new Tower(pos);
+
+                //ObjectSpawned?.Invoke(activeTower);
+                SpawnCommand<Tower> spawnCommand = new(activeTower, ObjectSpawned, GameTime);
+                CommandHistory.ExecuteCommand(spawnCommand);
             }
         }
 
-        public void SpawnTower(Coordinates pos)
+        public void ReplayCommandAtCurrentTime()
         {
-            bool canSpawn = true;
-            foreach (Tower tower in Towers)
+            List<ICommand> reverseReplayList = CommandHistory.ReplayStack;
+            reverseReplayList.Reverse();
+            
+            while (reverseReplayList[0].Timestamp <= GameTime)
             {
-                if (tower.Position == pos)
-                {
-                    canSpawn = false; break;
-                }
+                CommandHistory.ReplayCommand(reverseReplayList[0]);
+                reverseReplayList.RemoveAt(0);
             }
-            if (canSpawn)
-            {
-                Tower activeTower = new Tower(pos);
-                Towers.Add(activeTower);
-                activeTower.Enemies = Enemies;
-                TowerSpawned?.Invoke(this, new ObjectSpawnedOrDestroyedEventArgs<Tower>(activeTower));
-            }
+            
+            
+            //for (int i = 0; i < CommandHistory.ReplayStack.Count; i++)
+            //{
+            //    if (CommandHistory.ReplayStack[i].Timestamp >= GameTime)
+            //    {
+            //        CommandHistory.ReplayCommand(CommandHistory.ReplayStack[i]);
+            //        CommandHistory.ReplayStack.RemoveAt(i);
+            //    }
+            //}
         }
     }
 }

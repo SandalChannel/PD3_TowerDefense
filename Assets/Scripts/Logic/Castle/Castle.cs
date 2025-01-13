@@ -1,17 +1,17 @@
+using Logic.Enemies;
 using Logic.TileMap;
 using System.Collections.Generic;
+using Logic.Game;
+using Logic.Interfaces;
+using Logic.Command;
+using Command;
 
 namespace Logic.Castles
 {
-
-    public class Castle : LogicBase
+    public class Castle : LogicBase, IHasCoordinate, IHasHealth
     {
-        public static List<Castle> AllInstances = new List<Castle>();
-
-        public bool IsAlive { get; set; } = true;
-
         private Coordinates _position;
-        public Coordinates Position { get => _position; private set { _position = value; } }
+        public Coordinates Position { get => _position; set { _position = value; } }
 
         private float _health = 100f;
         public float Health
@@ -23,7 +23,16 @@ namespace Logic.Castles
                 if (_health == value) return;
 
                 _health = value;
+
                 OnPropertyChanged(nameof(Health));
+
+                if (_health <= 0)
+                {
+                    //OnObjectDestroyed();
+                    DestroyCommand<Castle> destroyCommand = new(this, GameLogic.GameTime);
+                    CommandHistory.ExecuteCommand(destroyCommand);
+                    return;
+                }
             }
         }
 
@@ -31,7 +40,6 @@ namespace Logic.Castles
         {
             Position = position;
             Health = health;
-            AllInstances.Add(this);
         }
     }
 }

@@ -11,6 +11,7 @@ using Logic.Enemies;
 using Logic.Libraries;
 using Display.Game;
 using Logic.TileMap;
+using Logic.Game;
 
 namespace Display.Enemies
 {
@@ -30,6 +31,7 @@ namespace Display.Enemies
             {
                 //update position
                 //transform.position = CoordinateConverter.HexToVector(Vector3.one , Logic.Position);
+                
 
                 StartCoroutine(MoveAnimation(0.2f));
             }
@@ -38,15 +40,19 @@ namespace Display.Enemies
             {
                 StartCoroutine(DamageFlash(0.2f));
                 _healthText.text = Logic.Health.ToString();
-
-                //died
-                if (Logic.Health <= 0)
-                {
-                    Logic.IsAlive = false;
-                    Destroy(this.gameObject);
-                }
             }
 
+        }
+
+        protected override void HandleObjectDestroy()
+        {
+            if (this.gameObject != null)
+            {
+                Destroy(this.gameObject);
+                StopAllCoroutines();
+            }
+
+            Destroy(this);
         }
 
         void Start()
@@ -55,6 +61,8 @@ namespace Display.Enemies
             HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
 
             originalColour = this.GetComponent<Renderer>().material.color;
+
+            
         }
 
         void Update()
@@ -62,8 +70,9 @@ namespace Display.Enemies
             movementCountdown -= Time.deltaTime;
             if (movementCountdown < 0f && Logic != null)
             {
-                Logic.AdvancePath();
-                Logic.TryAttack();
+                //Logic.AdvancePath();
+                //Logic.TryAttack();
+                Logic.StateMachine.Update();
                 movementCountdown = Logic.ActionDelay;
             }
         }

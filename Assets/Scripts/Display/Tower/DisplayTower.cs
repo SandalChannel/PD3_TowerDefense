@@ -2,6 +2,9 @@ using System.ComponentModel;
 using UnityEngine;
 using Display.Libraries;
 using Logic.Towers;
+using Display.Enemies;
+using System.Collections.Generic;
+using PlasticGui.Configuration.CloudEdition.Welcome;
 
 namespace Display.Towers
 {
@@ -18,6 +21,16 @@ namespace Display.Towers
                 //update position
                 transform.position = CoordinateConverter.HexToVector(Vector3.one, Logic.Position);
             }
+        }
+
+        protected override void HandleObjectDestroy()
+        {
+            if (this.gameObject != null)
+            {
+                Destroy(this.gameObject);
+            }
+
+            Destroy(this);
         }
 
         void Start()

@@ -1,5 +1,9 @@
 using Display.Castles;
+using Logic.Enemies;
+using Logic.Game;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 public abstract class DisplayBase<TLogic> : MonoBehaviour where TLogic : LogicBase //if you use a generic that implements a class, you get the class itself rather than the class it inherrits from
@@ -13,6 +17,7 @@ public abstract class DisplayBase<TLogic> : MonoBehaviour where TLogic : LogicBa
         {
             _logic = value;
             _logic.PropertyChanged += HandlePropertyChanged;
+            _logic.ObjectDestroyed += HandleObjectDestroy;
         }
     }
 
@@ -20,5 +25,7 @@ public abstract class DisplayBase<TLogic> : MonoBehaviour where TLogic : LogicBa
 
     //reacts to the event
     protected abstract void HandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e);
+
+    protected abstract void HandleObjectDestroy();
 
 }

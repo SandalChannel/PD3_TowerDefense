@@ -9,6 +9,8 @@ using Logic.Enemies;
 using Logic.Towers;
 using Display.Castles;
 using Logic.Castles;
+using System;
+using Display.Libraries;
 
 namespace Display.Game
 {
@@ -21,21 +23,20 @@ namespace Display.Game
 
         private GameLogic _game;
 
-        private List<DisplayEnemy> _enemies = new List<DisplayEnemy>();
-        private List<DisplayTower> _towers = new List<DisplayTower>();
-
         private float SpawnCountdown = 1f;
         private int EnemySpawnCount = 6;
 
         //all spawned objects will react to this
-        protected void HandleObjectSpawned(object sender, ObjectSpawnedOrDestroyedEventArgs<Enemy> e)
+        protected void HandleObjectSpawned(LogicBase model)
         {
-            AddEnemyPresenterInstance(e.ObjectToSpawn);
-        }
-        protected void HandleObjectSpawned(object sender, ObjectSpawnedOrDestroyedEventArgs<Tower> e)
-        {
-            AddTowerPresenterInstance(e.ObjectToSpawn);
-
+            if (model.GetType() == typeof(Enemy))
+            {
+                AddEnemyPresenterInstance((Enemy)model);
+            }
+            if (model.GetType() == typeof(Tower))
+            {
+                AddTowerPresenterInstance((Tower)model);
+            }
         }
 
 
@@ -46,15 +47,16 @@ namespace Display.Game
             
             SpawnCountdown = _game.SpawnDelay;
             EnemySpawnCount = _game.EnemiesToSpawn;
-            _game.EnemySpawned += HandleObjectSpawned;
-            _game.TowerSpawned += HandleObjectSpawned;
+            _game.ObjectSpawned += HandleObjectSpawned;
         }
 
         void Update()
         {
+            GameLogic.GameTime += Time.deltaTime; //updates the internal gameTime
+            
             SpawnCountdown -= Time.deltaTime;
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !GameLogic.IsReplaying)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -64,27 +66,26 @@ namespace Display.Game
 
                     DisplayCell hitCell;
                     hitObject.TryGetComponent<DisplayCell>(out hitCell);
-                    if (hitCell.CellType == CellType.Buildable)
+                    if (hitCell?.CellType == CellType.Buildable)
                     {
-                        _game.SpawnTower(hitCell.CellLogic.Coordinates);
+                        _game.SpawnOrRemoveTower(hitCell.CellLogic.Coordinates);
                     }
                 }
             }
 
-            if (EnemySpawnCount > 0 && SpawnCountdown <= 0)
+            if (EnemySpawnCount > 0 && SpawnCountdown <= 0 && !GameLogic.IsReplaying)
             {
                 _game.SpawnEnemyAtSpawner();
                 EnemySpawnCount--;
                 SpawnCountdown = _game.SpawnDelay;
             }
 
-            for (int i = 0; i < _enemies.Count; i++) //removes enemy when it's marked as dead //is done every frame, could be more efficient
+            if (GameLogic.IsReplaying)
             {
-                if (_enemies[i].Logic.IsAlive == false)
-                {
-                    _enemies.Remove(_enemies[i]);
-                }
+                //Debug.Log(GameLogic.GameTime);
+                _game.ReplayCommandAtCurrentTime();
             }
+
         }
 
         private void AddEnemyPresenterInstance(Enemy enemy)
@@ -93,7 +94,6 @@ namespace Display.Game
             GameObject enemyInstance = Instantiate(EnemyPrefab);
             DisplayEnemy enemyInstanceDisplay = enemyInstance.GetComponent<DisplayEnemy>();
             enemyInstanceDisplay.Logic = enemy;
-            _enemies.Add(enemyInstanceDisplay);
         }
 
         private void AddTowerPresenterInstance(Tower tower)
@@ -102,7 +102,6 @@ namespace Display.Game
             GameObject towerInstance = Instantiate(TowerPrefab);
             DisplayTower towerInstanceDisplay = towerInstance.GetComponent<DisplayTower>();
             towerInstanceDisplay.Logic = tower;
-            _towers.Add(towerInstanceDisplay);
         }
     }
 }

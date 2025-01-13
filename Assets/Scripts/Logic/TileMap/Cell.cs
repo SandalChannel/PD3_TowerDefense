@@ -1,6 +1,8 @@
+using Logic.Interfaces;
+
 namespace Logic.TileMap
 {
-    public class Cell
+    public class Cell// : IHasCoordinate
     {
         public CellType CellType { get; set; }
         public Coordinates Coordinates { get; set; }

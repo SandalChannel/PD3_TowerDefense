@@ -1,0 +1,7 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="GoalInfoPanel" src="project://database/Assets/UI/Templates/GoalInfoPanel.uxml?fileID=9197481963319205126&amp;guid=16e126579c4732045a7356216bd7e1b6&amp;type=3#GoalInfoPanel" />
+    <engine:Template name="EnemyInfoPanel" src="project://database/Assets/UI/Templates/EnemyInfoPanel.uxml?fileID=9197481963319205126&amp;guid=9a8c871893657d749b11b1e06a8025f4&amp;type=3#EnemyInfoPanel" />
+    <Style src="project://database/Assets/UI/USS/TowerDefense.uss?fileID=7433441132597879392&amp;guid=d9d26369de171f341b8a31a0b509ea73&amp;type=3#TowerDefense" />
+    <engine:Instance template="GoalInfoPanel" name="GoalInfoPanel" style="top: 2%; left: 1%; align-items: stretch; align-self: flex-start; position: absolute; width: 20%; height: 8%;" />
+    <engine:Instance template="EnemyInfoPanel" name="EnemyInfoPanel" style="position: absolute; top: 2%; right: 1%; width: 20%; height: 8%;" />
+</engine:UXML>

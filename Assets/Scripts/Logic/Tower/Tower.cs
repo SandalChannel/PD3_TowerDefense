@@ -1,11 +1,15 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using Logic.TileMap;
 using Logic.Enemies;
+using Logic.Interfaces;
+using Logic.Castles;
+using Logic.Command;
+using Command;
+using Logic.Game;
 
 namespace Logic.Towers
 {
-    public class Tower : LogicBase
+    public class Tower : LogicBase, IHasCoordinate
     {
         private Coordinates _position;
         public Coordinates Position
@@ -21,9 +25,7 @@ namespace Logic.Towers
             }
         }
 
-        public List<Enemy> Enemies = new List<Enemy>();
-
-        private float _damage = 10;
+        private readonly float _damage = 10;
 
         public float DamageDelay = 0.5f;
 
@@ -34,11 +36,13 @@ namespace Logic.Towers
 
         public void DamageEnemies()
         {
-            foreach (Enemy enemy in Enemies)
+            for (int i = 0; i < GetAllInstancesOfType<Enemy>().Count; i++)
             {
-                if (this.Position.IsAdjacentHex(enemy.Position))
+                if (this.Position.IsAdjacentHex(GetAllInstancesOfType<Enemy>()[i].Position))
                 {
-                    enemy.Health -= _damage;
+                    //Enemy.AllInstances[i].Health -= _damage;
+                    AttackCommand<Enemy> attackCommand = new AttackCommand<Enemy>(GetAllInstancesOfType<Enemy>()[i], _damage, GameLogic.GameTime);
+                    CommandHistory.ExecuteCommand(attackCommand);
                 }
             }
         }

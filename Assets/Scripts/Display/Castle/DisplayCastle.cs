@@ -5,18 +5,14 @@ using Logic.Castles;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using Display.Enemies;
+using Logic.Enemies;
+using Logic.Game;
 
 namespace Display.Castles
 {
-    //NOTE: THIS CLASS USES A LOT OF COPIED CODE FROM ENEMY, IT MIGHT BE WORTH MAKING AN INTERFACE FOR THIS, SAME GOES FOR THE LOGIC
-
-
     public class DisplayCastle : DisplayBase<Castle>
     {
-        //NOTE: USE THIS STATIC FUNCTION IN ALL CLASSES THAT SHOULD KEEP TRACK OF THEIR INSTANCES, THIS IS VERY USEFUL
-        public static List<DisplayCastle> AllInstances = new List<DisplayCastle>();
-
-
         [SerializeField]
         public Vector2Int Coordinate;
         public Coordinates MapCoordinate => new Coordinates(Coordinate.x, Coordinate.y);
@@ -35,19 +31,21 @@ namespace Display.Castles
             {
                 StartCoroutine(DamageFlash(0.2f));
                 _healthText.text = Logic.Health.ToString();
-
-                //died
-                if (Logic.Health <= 0)
-                {
-                    Logic.IsAlive = false;
-                    Destroy(this.gameObject);
-                }
             }
         }
 
-        void Start()
+        protected override void HandleObjectDestroy()
         {
-            AllInstances.Add(this);
+            if (this.gameObject != null)
+            {
+                Destroy(this.gameObject);
+            }
+
+            Destroy(this);
+        }
+
+        void Awake()
+        {
             Logic = new Castle(MapCoordinate, Health);
             HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
 
