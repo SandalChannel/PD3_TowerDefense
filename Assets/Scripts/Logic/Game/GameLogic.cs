@@ -6,6 +6,7 @@ using Logic.TileMap;
 using Logic.Libraries;
 using Logic.Command;
 using Command;
+using Logic.Castles;
 
 namespace Logic.Game
 {
@@ -26,6 +27,17 @@ namespace Logic.Game
             Map = map;
 
             GameTime = 0f;
+        }
+
+        public void SpawnCastles()
+        {
+            foreach (Cell goal in CellGetter.GetCellsByType(Map.GetAllCells(), CellType.Goal))
+            {
+                Castle activeCastle = new(goal.Coordinates, 100f);
+                
+                SpawnCommand<Castle> spawnCommand = new(activeCastle, ObjectSpawned, GameTime);
+                CommandHistory.ExecuteCommand(spawnCommand);
+            }
         }
 
         public void SpawnEnemyAtSpawner()

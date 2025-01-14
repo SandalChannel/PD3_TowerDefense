@@ -42,10 +42,9 @@ namespace Display.Castles
             Destroy(this);
         }
 
-        void Awake()
+        void Start()
         {
-            Logic = new Castle(MapCoordinate, Health);
-            HandlePropertyChanged(this, new PropertyChangedEventArgs(nameof(Logic.Position))); //runs the function once at spawn so the position is correctly synced
+            this.transform.position = Libraries.CoordinateConverter.HexToVector(this.transform.lossyScale, Logic.Position);
 
             _originalColour = this.GetComponentInChildren<Renderer>().material.color;
         }

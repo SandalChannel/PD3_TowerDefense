@@ -5,6 +5,8 @@ using Display.Towers;
 using Logic.Game;
 using Logic.Enemies;
 using Logic.Towers;
+using Display.Castles;
+using Logic.Castles;
 
 namespace Display.Game
 {
@@ -12,6 +14,7 @@ namespace Display.Game
     {
         [SerializeField] private GameObject EnemyPrefab;
         [SerializeField] private GameObject TowerPrefab;
+        [SerializeField] private GameObject CastlePrefab;
 
         private DisplayMap mapDisplay;
 
@@ -31,6 +34,10 @@ namespace Display.Game
             {
                 AddTowerPresenterInstance((Tower)model);
             }
+            if (model.GetType() == typeof(Castle))
+            {
+                AddCastlePresenterInstance((Castle)model);
+            }
         }
 
 
@@ -42,6 +49,9 @@ namespace Display.Game
             SpawnCountdown = _game.SpawnDelay;
             EnemySpawnCount = _game.EnemiesToSpawn;
             _game.ObjectSpawned += HandleObjectSpawned;
+
+
+            _game.SpawnCastles();
         }
 
         private void Update()
@@ -94,6 +104,14 @@ namespace Display.Game
             GameObject towerInstance = Instantiate(TowerPrefab);
             DisplayTower towerInstanceDisplay = towerInstance.GetComponent<DisplayTower>();
             towerInstanceDisplay.Logic = tower;
+        }
+
+        private void AddCastlePresenterInstance(Castle castle)
+        {
+            //create castles (prefabs + linking models to presenters)
+            GameObject castleInstance = Instantiate(CastlePrefab);
+            DisplayCastle castleInstanceDisplay = castleInstance.GetComponent<DisplayCastle>();
+            castleInstanceDisplay.Logic = castle;
         }
     }
 }
