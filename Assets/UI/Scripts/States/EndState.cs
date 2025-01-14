@@ -21,20 +21,22 @@ namespace UI.States
 
         public void OnEnter()
         {
-            _endScreen.enabled = true;
-            Time.timeScale = 0f;
+            if (_endScreen != null)
+            {
+                _endScreen.enabled = true;
+                Time.timeScale = 0f;
 
-            VisualElement rootElement = _endScreen.GetComponent<UIDocument>().rootVisualElement;
+                VisualElement rootElement = _endScreen.GetComponent<UIDocument>().rootVisualElement;
 
-            Button replayButton = rootElement.Q<Button>("ReplayButton");
-            replayButton.RegisterCallback<ClickEvent>(StartReplay);
+                Button replayButton = rootElement.Q<Button>("ReplayButton");
+                replayButton.RegisterCallback<ClickEvent>(StartReplay);
 
-            Button newGameButton = rootElement.Q<Button>("NewGameButton");
-            newGameButton.RegisterCallback<ClickEvent>(RestartScene);
+                Button newGameButton = rootElement.Q<Button>("NewGameButton");
+                newGameButton.RegisterCallback<ClickEvent>(RestartScene);
 
-            Button quitButton = rootElement.Q<Button>("QuitToMenuButton");
-            quitButton.RegisterCallback<ClickEvent>(LoadTitle);
-
+                Button quitButton = rootElement.Q<Button>("QuitToMenuButton");
+                quitButton.RegisterCallback<ClickEvent>(LoadTitle);
+            }
         }
 
         private void RestartScene(ClickEvent clickEvent)

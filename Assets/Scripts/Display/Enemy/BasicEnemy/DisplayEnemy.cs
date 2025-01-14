@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using Display.Libraries;
 using Logic.Enemies;
+using Logic.Game;
 
 namespace Display.Enemies
 {
@@ -59,7 +60,7 @@ namespace Display.Enemies
         private void Update()
         {
             _movementCountdown -= Time.deltaTime;
-            if (_movementCountdown < 0f && Logic != null)
+            if (_movementCountdown < 0f && Logic != null && !GameLogic.IsReplaying)
             {
                 Logic.StateMachine.Update();
                 _movementCountdown = Logic.ActionDelay;

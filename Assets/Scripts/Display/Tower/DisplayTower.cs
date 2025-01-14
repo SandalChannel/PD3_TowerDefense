@@ -5,6 +5,7 @@ using Logic.Towers;
 using Display.Enemies;
 using System.Collections.Generic;
 using PlasticGui.Configuration.CloudEdition.Welcome;
+using Logic.Game;
 
 namespace Display.Towers
 {
@@ -42,7 +43,7 @@ namespace Display.Towers
         {
             _damageCountdown -= Time.deltaTime;
 
-            if (_damageCountdown <= 0)
+            if (_damageCountdown <= 0 && !GameLogic.IsReplaying)
             {
                 Logic.DamageEnemies();
                 _damageCountdown = Logic.DamageDelay;
